@@ -98,23 +98,43 @@ background:#43a047;
 
 #message{
 
-margin-top:15px;
-font-weight:bold;
-text-align:center;
+margin-top:20px;
+font-size:15px;
+line-height:1.6;
 
 }
 
-/* trạng thái */
+/* lỗi */
 
 .error{
 
-color:red;
+background:#fdecea;
+border:1px solid #e57373;
+color:#b71c1c;
+
+padding:12px 16px;
+
+border-radius:6px;
+
+text-align:left;
 
 }
 
+/* thành công */
+
 .success{
 
-color:green;
+background:#e8f5e9;
+border:1px solid #66bb6a;
+color:#1b5e20;
+
+padding:12px 16px;
+
+border-radius:6px;
+
+text-align:center;
+
+}
 
 }
 
@@ -181,11 +201,8 @@ color:green;
 /* lấy dữ liệu */
 
 function getValue(id){
-
 return document.getElementById(id).value.trim();
-
 }
-
 
 /* đếm số */
 
@@ -207,7 +224,6 @@ return count;
 
 }
 
-
 /* đếm chữ hoa */
 
 function countUpper(password){
@@ -228,7 +244,6 @@ return count;
 
 }
 
-
 /* kiểm tra số chẵn */
 
 function evenPhone(phone){
@@ -236,7 +251,6 @@ function evenPhone(phone){
 return /^[02468]+$/.test(phone);
 
 }
-
 
 /* validate */
 
@@ -252,18 +266,26 @@ let phone=getValue("phone");
 
 let password=getValue("password");
 
+/* danh sách lỗi */
+
+let errors=[];
+
 
 /* SV21 */
 
 if(sv==="21"){
 
-if(!/^[a-zA-ZÀ-ỹ\s]+$/.test(name)) return show("Tên chứa ký tự đặc biệt");
+if(!/^[a-zA-ZÀ-ỹ\s]+$/.test(name))
+errors.push("Tên chứa ký tự đặc biệt");
 
-if(!email.startsWith("user")) return show("Email phải bắt đầu bằng user");
+if(!email.startsWith("user"))
+errors.push("Email phải bắt đầu bằng user");
 
-if(!/^\d{11}$/.test(phone)) return show("SĐT phải đủ 11 số");
+if(!/^\d{11}$/.test(phone))
+errors.push("SĐT phải đủ 11 số");
 
-if(countNumber(password)<3) return show("Password ≥ 3 số");
+if(countNumber(password)<3)
+errors.push("Password ≥ 3 số");
 
 }
 
@@ -272,13 +294,17 @@ if(countNumber(password)<3) return show("Password ≥ 3 số");
 
 if(sv==="22"){
 
-if(name.includes(" ")) return show("Tên không chứa dấu cách");
+if(name.includes(" "))
+errors.push("Tên không chứa dấu cách");
 
-if(/\d/.test(email)) return show("Email không chứa số");
+if(/\d/.test(email))
+errors.push("Email không chứa số");
 
-if(!evenPhone(phone)) return show("SĐT chỉ số chẵn");
+if(!evenPhone(phone))
+errors.push("SĐT chỉ số chẵn");
 
-if(password.length<10) return show("Password ≥10 ký tự");
+if(password.length<10)
+errors.push("Password ≥10 ký tự");
 
 }
 
@@ -287,13 +313,17 @@ if(password.length<10) return show("Password ≥10 ký tự");
 
 if(sv==="23"){
 
-if(name.split(" ").length<2) return show("Tên ≥2 từ");
+if(name.split(" ").length<2)
+errors.push("Tên ≥2 từ");
 
-if(!email.startsWith("user")) return show("Email bắt đầu user");
+if(!email.startsWith("user"))
+errors.push("Email bắt đầu user");
 
-if(!evenPhone(phone)) return show("SĐT chỉ số chẵn");
+if(!evenPhone(phone))
+errors.push("SĐT chỉ số chẵn");
 
-if(countNumber(password)<3) return show("Password ≥3 số");
+if(countNumber(password)<3)
+errors.push("Password ≥3 số");
 
 }
 
@@ -302,13 +332,17 @@ if(countNumber(password)<3) return show("Password ≥3 số");
 
 if(sv==="24"){
 
-if(!/[A-Z]/.test(name)) return show("Tên có chữ hoa");
+if(!/[A-Z]/.test(name))
+errors.push("Tên có chữ hoa");
 
-if(!email.startsWith("user")) return show("Email bắt đầu user");
+if(!email.startsWith("user"))
+errors.push("Email bắt đầu user");
 
-if(!phone.startsWith("09")) return show("SĐT bắt đầu 09");
+if(!phone.startsWith("09"))
+errors.push("SĐT bắt đầu 09");
 
-if(password.length<10) return show("Password ≥10 ký tự");
+if(password.length<10)
+errors.push("Password ≥10 ký tự");
 
 }
 
@@ -317,13 +351,17 @@ if(password.length<10) return show("Password ≥10 ký tự");
 
 if(sv==="25"){
 
-if(name.length>20) return show("Tên ≤20 ký tự");
+if(name.length>20)
+errors.push("Tên ≤20 ký tự");
 
-if(!email.startsWith("user")) return show("Email bắt đầu user");
+if(!email.startsWith("user"))
+errors.push("Email bắt đầu user");
 
-if(phone.endsWith("0")) return show("SĐT không kết thúc 0");
+if(phone.endsWith("0"))
+errors.push("SĐT không kết thúc 0");
 
-if(countUpper(password)<2) return show("Password ≥2 chữ hoa");
+if(countUpper(password)<2)
+errors.push("Password ≥2 chữ hoa");
 
 }
 
@@ -332,13 +370,17 @@ if(countUpper(password)<2) return show("Password ≥2 chữ hoa");
 
 if(sv==="26"){
 
-if(name.split(" ").length<2) return show("Tên ≥2 từ");
+if(name.split(" ").length<2)
+errors.push("Tên ≥2 từ");
 
-if(/\d/.test(email)) return show("Email không chứa số");
+if(/\d/.test(email))
+errors.push("Email không chứa số");
 
-if(!evenPhone(phone)) return show("SĐT chỉ số chẵn");
+if(!evenPhone(phone))
+errors.push("SĐT chỉ số chẵn");
 
-if(password.includes("@")) return show("Password không chứa @");
+if(password.includes("@"))
+errors.push("Password không chứa @");
 
 }
 
@@ -347,13 +389,17 @@ if(password.includes("@")) return show("Password không chứa @");
 
 if(sv==="27"){
 
-if(!/[A-Z]/.test(name)) return show("Tên có chữ hoa");
+if(!/[A-Z]/.test(name))
+errors.push("Tên có chữ hoa");
 
-if(!email.startsWith("user")) return show("Email bắt đầu user");
+if(!email.startsWith("user"))
+errors.push("Email bắt đầu user");
 
-if(!/^\d{11}$/.test(phone)) return show("SĐT đủ 11 số");
+if(!/^\d{11}$/.test(phone))
+errors.push("SĐT đủ 11 số");
 
-if(password.length<10) return show("Password ≥10 ký tự");
+if(password.length<10)
+errors.push("Password ≥10 ký tự");
 
 }
 
@@ -362,14 +408,19 @@ if(password.length<10) return show("Password ≥10 ký tự");
 
 if(sv==="28"){
 
-if(name.split(" ").length<2) return show("Tên ≥2 từ");
+if(name.split(" ").length<2)
+errors.push("Tên ≥2 từ");
 
-if(!email.includes("@") || (email.split("@")[0].split(".").length-1)!=2)
-return show("Email có đúng 2 dấu . trước @");
+if(!email.includes("@") ||
+(email.split("@")[0].split(".").length-1)!=2)
 
-if(phone.endsWith("0")) return show("SĐT không kết thúc 0");
+errors.push("Email có đúng 2 dấu . trước @");
 
-if(countNumber(password)<3) return show("Password ≥3 số");
+if(phone.endsWith("0"))
+errors.push("SĐT không kết thúc 0");
+
+if(countNumber(password)<3)
+errors.push("Password ≥3 số");
 
 }
 
@@ -378,13 +429,17 @@ if(countNumber(password)<3) return show("Password ≥3 số");
 
 if(sv==="29"){
 
-if(name.includes(" ")) return show("Tên không chứa dấu cách");
+if(name.includes(" "))
+errors.push("Tên không chứa dấu cách");
 
-if(/\d/.test(email)) return show("Email không chứa số");
+if(/\d/.test(email))
+errors.push("Email không chứa số");
 
-if(phone.endsWith("0")) return show("SĐT không kết thúc 0");
+if(phone.endsWith("0"))
+errors.push("SĐT không kết thúc 0");
 
-if(countNumber(password)<3) return show("Password ≥3 số");
+if(countNumber(password)<3)
+errors.push("Password ≥3 số");
 
 }
 
@@ -393,29 +448,55 @@ if(countNumber(password)<3) return show("Password ≥3 số");
 
 if(sv==="30"){
 
-if(name.length>20) return show("Tên ≤20 ký tự");
+if(name.length>20)
+errors.push("Tên ≤20 ký tự");
 
-if(/\d/.test(email)) return show("Email không chứa số");
+if(/\d/.test(email))
+errors.push("Email không chứa số");
 
-if(!/^\d{11}$/.test(phone)) return show("SĐT đủ 11 số");
+if(!/^\d{11}$/.test(phone))
+errors.push("SĐT đủ 11 số");
 
-if(password.length<10) return show("Password ≥10 ký tự");
+if(password.length<10)
+errors.push("Password ≥10 ký tự");
 
 }
 
+
+/* hiển thị lỗi */
+
+if(errors.length>0){
+
+showErrors(errors);
+
+}else{
 
 success();
 
 }
 
+}
 
-/* lỗi */
 
-function show(text){
+/* hiển thị danh sách lỗi */
+
+function showErrors(list){
 
 let message=document.getElementById("message");
 
-message.innerHTML=text;
+let html="<b>Vui lòng kiểm tra lại:</b>";
+
+html+="<ol>";
+
+for(let i=0;i<list.length;i++){
+
+html+="<li>"+list[i]+"</li>";
+
+}
+
+html+="</ol>";
+
+message.innerHTML=html;
 
 message.className="error";
 
@@ -428,14 +509,10 @@ function success(){
 
 let message=document.getElementById("message");
 
-message.innerHTML="Đăng ký hợp lệ";
+message.innerHTML="✅ Đăng ký hợp lệ";
 
 message.className="success";
 
 }
 
 </script>
-
-</body>
-
-</html>
