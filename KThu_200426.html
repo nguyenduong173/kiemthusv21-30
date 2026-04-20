@@ -1,518 +1,277 @@
 <!DOCTYPE html>
-<html>
-
+<html lang="vi">
 <head>
-
-<meta charset="UTF-8">
-
-<title>Form kiểm thử SV21 → SV30</title>
-
-<style>
+    <meta charset="UTF-8">
+    <title>Hệ thống Kiểm thử Đăng ký Multi-SV</title>
+    <style>
 
 body{
-font-family: Arial;
-background: #eef2f7;
+font-family: "Segoe UI", sans-serif;
+background: linear-gradient(135deg,#4facfe,#00f2fe);
 display:flex;
 justify-content:center;
 align-items:center;
-height:100vh;
+min-height:100vh;
+margin:0;
 }
 
-/* khung form */
-
-.container{
-
-width:420px;
+.card{
 background:white;
-padding:30px;
-border-radius:12px;
-box-shadow:0 4px 12px rgba(0,0,0,0.1);
-
+padding:35px;
+border-radius:16px;
+box-shadow:0 10px 25px rgba(0,0,0,0.15);
+width:460px;
+animation: fadeIn .6s ease;
 }
 
-/* tiêu đề */
+@keyframes fadeIn{
+from{
+opacity:0;
+transform:translateY(20px);
+}
+to{
+opacity:1;
+transform:translateY(0);
+}
+}
 
 h2{
-
 text-align:center;
-margin-bottom:20px;
-
+color:#333;
+margin-bottom:25px;
 }
 
-/* label */
+.form-group{
+margin-bottom:18px;
+}
 
 label{
-
-font-weight:bold;
+font-weight:600;
+color:#444;
+margin-bottom:6px;
 display:block;
-margin-top:10px;
-
 }
 
-/* input + select */
-
-input, select{
-
+select,input{
 width:100%;
-padding:10px;
-margin-top:5px;
+padding:12px;
+border-radius:8px;
 border:1px solid #ccc;
-border-radius:6px;
 font-size:15px;
-box-sizing:border-box;
-
+transition:.3s;
 }
 
-/* hiệu ứng focus */
-
-input:focus, select:focus{
-
-border-color:#4CAF50;
+select:focus,input:focus{
+border-color:#4facfe;
 outline:none;
-
+box-shadow:0 0 6px rgba(79,172,254,.4);
 }
-
-/* button */
 
 button{
-
 width:100%;
-margin-top:20px;
-padding:12px;
-background:#4CAF50;
+padding:14px;
+background:linear-gradient(135deg,#667eea,#764ba2);
 color:white;
 border:none;
+border-radius:10px;
 font-size:16px;
-border-radius:6px;
+font-weight:bold;
 cursor:pointer;
-
+transition:.3s;
 }
 
 button:hover{
-
-background:#43a047;
-
+transform:translateY(-2px);
+box-shadow:0 6px 12px rgba(0,0,0,.2);
 }
 
-/* message */
-
-#message{
-
+#log{
 margin-top:20px;
-font-size:15px;
+padding:14px;
+border-radius:10px;
+font-size:14px;
 line-height:1.6;
-
 }
-
-/* lỗi */
 
 .error{
-
-background:#fdecea;
-border:1px solid #e57373;
-color:#b71c1c;
-
-padding:12px 16px;
-
-border-radius:6px;
-
-text-align:left;
-
+background:#ffe5e5;
+border-left:6px solid #ff4d4f;
+color:#a8071a;
 }
-
-/* thành công */
 
 .success{
-
-background:#e8f5e9;
-border:1px solid #66bb6a;
-color:#1b5e20;
-
-padding:12px 16px;
-
-border-radius:6px;
-
+background:#e6fffb;
+border-left:6px solid #13c2c2;
+color:#006d75;
+font-weight:bold;
 text-align:center;
-
 }
 
+.info-box{
+font-size:13px;
+color:#555;
+background:#f0f5ff;
+padding:12px;
+border-left:5px solid #4facfe;
+border-radius:8px;
+margin-bottom:18px;
 }
 
 </style>
-
 </head>
-
 <body>
 
+<div class="card">
+    <h2>Form Đăng Ký</h2>
+    
+    <div class="form-group">
+        <label>Chọn cấu hình kiểm thử (Sinh viên):</label>
+        <select id="svSelector">
+            <option value="21">SV 21</option>
+            <option value="22">SV 22</option>
+            <option value="23">SV 23</option>
+            <option value="24">SV 24</option>
+            <option value="25">SV 25</option>
+            <option value="26">SV 26</option>
+            <option value="27">SV 27</option>
+            <option value="28">SV 28</option>
+            <option value="29">SV 29</option>
+            <option value="30">SV 30</option>
+        </select>
+    </div>
 
-<div class="container">
+    <div class="info-box" id="ruleInfo">Đang tải quy tắc...</div>
 
-<h2>FORM KIỂM THỬ SV21 → SV30</h2>
+    <form id="registerForm">
+        <div class="form-group">
+            <label>Họ Tên:</label>
+            <input type="text" id="fullName" placeholder="Nhập họ tên...">
+        </div>
+        <div class="form-group">
+            <label>Email:</label>
+            <input type="text" id="email" placeholder="Nhập email...">
+        </div>
+        <div class="form-group">
+            <label>Số Điện Thoại:</label>
+            <input type="text" id="phone" placeholder="Nhập số điện thoại...">
+        </div>
+        <div class="form-group">
+            <label>Mật Khẩu:</label>
+            <input type="password" id="password" placeholder="Nhập mật khẩu...">
+        </div>
+        <button type="submit">Kiểm thử Đăng ký</button>
+    </form>
 
-
-<label>Chọn sinh viên</label>
-
-<select id="student">
-
-<option value="21">SV21</option>
-<option value="22">SV22</option>
-<option value="23">SV23</option>
-<option value="24">SV24</option>
-<option value="25">SV25</option>
-<option value="26">SV26</option>
-<option value="27">SV27</option>
-<option value="28">SV28</option>
-<option value="29">SV29</option>
-<option value="30">SV30</option>
-
-</select>
-
-
-<label>Họ tên</label>
-
-<input id="name" placeholder="Nhập họ tên">
-
-
-<label>Email</label>
-
-<input id="email" placeholder="Nhập email">
-
-
-<label>Số điện thoại</label>
-
-<input id="phone" placeholder="Nhập số điện thoại">
-
-
-<label>Mật khẩu</label>
-
-<input id="password" type="password" placeholder="Nhập mật khẩu">
-
-
-<button onclick="validate()">Kiểm thử</button>
-
-
-<p id="message"></p>
-
+    <div id="log"></div>
 </div>
 
-
 <script>
+// Định nghĩa bộ quy tắc của 10 sinh viên
+const svRules = {
+    "21": {
+        name: (v) => !/[!@#$%^&*(),.?":{}|<>]/.test(v) || "Họ tên không được chứa ký tự đặc biệt.",
+        email: (v) => v.startsWith('user') || "Email phải bắt đầu bằng 'user'.",
+        phone: (v) => v.length === 11 || "SĐT phải đúng 11 số.",
+        pass: (v) => (v.match(/\d/g) || []).length >= 3 || "Mật khẩu phải có ít nhất 3 số."
+    },
+    "22": {
+        name: (v) => !/\s/.test(v) || "Họ tên không được chứa dấu cách.",
+        email: (v) => !/\d/.test(v) || "Email không được chứa số.",
+        phone: (v) => /^[02468]+$/.test(v) || "SĐT chỉ được chứa số chẵn.",
+        pass: (v) => v.length >= 10 || "Mật khẩu phải có ít nhất 10 ký tự."
+    },
+    "23": {
+        name: (v) => v.trim().split(/\s+/).length >= 2 || "Họ tên phải có ít nhất 2 từ.",
+        email: (v) => v.startsWith('user') || "Email phải bắt đầu bằng 'user'.",
+        phone: (v) => /^[02468]+$/.test(v) || "SĐT chỉ được chứa số chẵn.",
+        pass: (v) => (v.match(/\d/g) || []).length >= 3 || "Mật khẩu phải có ít nhất 3 số."
+    },
+    "24": {
+        name: (v) => /[A-Z]/.test(v) || "Họ tên phải có ít nhất 1 chữ hoa.",
+        email: (v) => v.startsWith('user') || "Email phải bắt đầu bằng 'user'.",
+        phone: (v) => v.startsWith('09') || "SĐT phải bắt đầu bằng '09'.",
+        pass: (v) => v.length >= 10 || "Mật khẩu phải có ít nhất 10 ký tự."
+    },
+    "25": {
+        name: (v) => v.length <= 20 || "Họ tên không được quá 20 ký tự.",
+        email: (v) => v.startsWith('user') || "Email phải bắt đầu bằng 'user'.",
+        phone: (v) => !v.endsWith('0') || "SĐT không được kết thúc bằng số '0'.",
+        pass: (v) => (v.match(/[A-Z]/g) || []).length >= 2 || "Mật khẩu phải có ít nhất 2 chữ hoa."
+    },
+    "26": {
+        name: (v) => v.trim().split(/\s+/).length >= 2 || "Họ tên phải có ít nhất 2 từ.",
+        email: (v) => !/\d/.test(v) || "Email không được chứa số.",
+        phone: (v) => /^[02468]+$/.test(v) || "SĐT chỉ được chứa số chẵn.",
+        pass: (v) => !v.includes('@') || "Mật khẩu không được chứa ký tự '@'."
+    },
+    "27": {
+        name: (v) => /[A-Z]/.test(v) || "Họ tên phải có ít nhất 1 chữ hoa.",
+        email: (v) => v.startsWith('user') || "Email phải bắt đầu bằng 'user'.",
+        phone: (v) => v.length === 11 || "SĐT phải đúng 11 số.",
+        pass: (v) => v.length >= 10 || "Mật khẩu phải có ít nhất 10 ký tự."
+    },
+    "28": {
+        name: (v) => v.trim().split(/\s+/).length >= 2 || "Họ tên phải có ít nhất 2 từ.",
+        email: (v) => (v.split('@')[0].match(/\./g) || []).length === 2 || "Email phải có đúng 2 dấu '.' trước '@'.",
+        phone: (v) => !v.endsWith('0') || "SĐT không được kết thúc bằng số '0'.",
+        pass: (v) => (v.match(/\d/g) || []).length >= 3 || "Mật khẩu phải có ít nhất 3 số."
+    },
+    "29": {
+        name: (v) => !/\s/.test(v) || "Họ tên không được chứa dấu cách.",
+        email: (v) => !/\d/.test(v) || "Email không được chứa số.",
+        phone: (v) => !v.endsWith('0') || "SĐT không được kết thúc bằng số '0'.",
+        pass: (v) => (v.match(/\d/g) || []).length >= 3 || "Mật khẩu phải có ít nhất 3 số."
+    },
+    "30": {
+        name: (v) => v.length <= 20 || "Họ tên không được quá 20 ký tự.",
+        email: (v) => !/\d/.test(v) || "Email không được chứa số.",
+        phone: (v) => v.length === 11 || "SĐT phải đúng 11 số.",
+        pass: (v) => v.length >= 10 || "Mật khẩu phải có ít nhất 10 ký tự."
+    }
+};
 
-/* lấy dữ liệu */
+const selector = document.getElementById('svSelector');
+const ruleInfo = document.getElementById('ruleInfo');
+const log = document.getElementById('log');
 
-function getValue(id){
-return document.getElementById(id).value.trim();
+// Cập nhật hiển thị quy tắc khi đổi SV
+function updateInfo() {
+    const sv = selector.value;
+    ruleInfo.innerHTML = `<strong>Quy tắc đang áp dụng:</strong><br> SV ${sv} - Đang sẵn sàng kiểm thử.`;
+    log.className = ""; log.innerText = "";
 }
 
-/* đếm số */
-
-function countNumber(password){
-
-let count=0;
-
-for(let i=0;i<password.length;i++){
-
-if(!isNaN(password[i]) && password[i]!=" "){
-
-count++;
-
-}
-
-}
-
-return count;
-
-}
-
-/* đếm chữ hoa */
-
-function countUpper(password){
-
-let count=0;
-
-for(let i=0;i<password.length;i++){
-
-if(password[i]>='A' && password[i]<='Z'){
-
-count++;
-
-}
-
-}
-
-return count;
-
-}
-
-/* kiểm tra số chẵn */
-
-function evenPhone(phone){
-
-return /^[02468]+$/.test(phone);
-
-}
-
-/* validate */
-
-function validate(){
-
-let sv=getValue("student");
-
-let name=getValue("name");
-
-let email=getValue("email");
-
-let phone=getValue("phone");
-
-let password=getValue("password");
-
-/* danh sách lỗi */
-
-let errors=[];
-
-
-/* SV21 */
-
-if(sv==="21"){
-
-if(!/^[a-zA-ZÀ-ỹ\s]+$/.test(name))
-errors.push("Tên chứa ký tự đặc biệt");
-
-if(!email.startsWith("user"))
-errors.push("Email phải bắt đầu bằng user");
-
-if(!/^\d{11}$/.test(phone))
-errors.push("SĐT phải đủ 11 số");
-
-if(countNumber(password)<3)
-errors.push("Password ≥ 3 số");
-
-}
-
-
-/* SV22 */
-
-if(sv==="22"){
-
-if(name.includes(" "))
-errors.push("Tên không chứa dấu cách");
-
-if(/\d/.test(email))
-errors.push("Email không chứa số");
-
-if(!evenPhone(phone))
-errors.push("SĐT chỉ số chẵn");
-
-if(password.length<10)
-errors.push("Password ≥10 ký tự");
-
-}
-
-
-/* SV23 */
-
-if(sv==="23"){
-
-if(name.split(" ").length<2)
-errors.push("Tên ≥2 từ");
-
-if(!email.startsWith("user"))
-errors.push("Email bắt đầu user");
-
-if(!evenPhone(phone))
-errors.push("SĐT chỉ số chẵn");
-
-if(countNumber(password)<3)
-errors.push("Password ≥3 số");
-
-}
-
-
-/* SV24 */
-
-if(sv==="24"){
-
-if(!/[A-Z]/.test(name))
-errors.push("Tên có chữ hoa");
-
-if(!email.startsWith("user"))
-errors.push("Email bắt đầu user");
-
-if(!phone.startsWith("09"))
-errors.push("SĐT bắt đầu 09");
-
-if(password.length<10)
-errors.push("Password ≥10 ký tự");
-
-}
-
-
-/* SV25 */
-
-if(sv==="25"){
-
-if(name.length>20)
-errors.push("Tên ≤20 ký tự");
-
-if(!email.startsWith("user"))
-errors.push("Email bắt đầu user");
-
-if(phone.endsWith("0"))
-errors.push("SĐT không kết thúc 0");
-
-if(countUpper(password)<2)
-errors.push("Password ≥2 chữ hoa");
-
-}
-
-
-/* SV26 */
-
-if(sv==="26"){
-
-if(name.split(" ").length<2)
-errors.push("Tên ≥2 từ");
-
-if(/\d/.test(email))
-errors.push("Email không chứa số");
-
-if(!evenPhone(phone))
-errors.push("SĐT chỉ số chẵn");
-
-if(password.includes("@"))
-errors.push("Password không chứa @");
-
-}
-
-
-/* SV27 */
-
-if(sv==="27"){
-
-if(!/[A-Z]/.test(name))
-errors.push("Tên có chữ hoa");
-
-if(!email.startsWith("user"))
-errors.push("Email bắt đầu user");
-
-if(!/^\d{11}$/.test(phone))
-errors.push("SĐT đủ 11 số");
-
-if(password.length<10)
-errors.push("Password ≥10 ký tự");
-
-}
-
-
-/* SV28 */
-
-if(sv==="28"){
-
-if(name.split(" ").length<2)
-errors.push("Tên ≥2 từ");
-
-if(!email.includes("@") ||
-(email.split("@")[0].split(".").length-1)!=2)
-
-errors.push("Email có đúng 2 dấu . trước @");
-
-if(phone.endsWith("0"))
-errors.push("SĐT không kết thúc 0");
-
-if(countNumber(password)<3)
-errors.push("Password ≥3 số");
-
-}
-
-
-/* SV29 */
-
-if(sv==="29"){
-
-if(name.includes(" "))
-errors.push("Tên không chứa dấu cách");
-
-if(/\d/.test(email))
-errors.push("Email không chứa số");
-
-if(phone.endsWith("0"))
-errors.push("SĐT không kết thúc 0");
-
-if(countNumber(password)<3)
-errors.push("Password ≥3 số");
-
-}
-
-
-/* SV30 */
-
-if(sv==="30"){
-
-if(name.length>20)
-errors.push("Tên ≤20 ký tự");
-
-if(/\d/.test(email))
-errors.push("Email không chứa số");
-
-if(!/^\d{11}$/.test(phone))
-errors.push("SĐT đủ 11 số");
-
-if(password.length<10)
-errors.push("Password ≥10 ký tự");
-
-}
-
-
-/* hiển thị lỗi */
-
-if(errors.length>0){
-
-showErrors(errors);
-
-}else{
-
-success();
-
-}
-
-}
-
-
-/* hiển thị danh sách lỗi */
-
-function showErrors(list){
-
-let message=document.getElementById("message");
-
-let html="<b>Vui lòng kiểm tra lại:</b>";
-
-html+="<ol>";
-
-for(let i=0;i<list.length;i++){
-
-html+="<li>"+list[i]+"</li>";
-
-}
-
-html+="</ol>";
-
-message.innerHTML=html;
-
-message.className="error";
-
-}
-
-
-/* thành công */
-
-function success(){
-
-let message=document.getElementById("message");
-
-message.innerHTML="✅ Đăng ký hợp lệ";
-
-message.className="success";
-
-}
-
+selector.addEventListener('change', updateInfo);
+updateInfo();
+
+document.getElementById('registerForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+    const sv = selector.value;
+    const rules = svRules[sv];
+    
+    const data = {
+        name: document.getElementById('fullName').value,
+        email: document.getElementById('email').value,
+        phone: document.getElementById('phone').value,
+        pass: document.getElementById('password').value
+    };
+
+    let errors = [];
+    
+    // Chạy kiểm tra theo bộ quy tắc đã chọn
+    for (let key in rules) {
+        let result = rules[key](data[key]);
+        if (result !== true) errors.push(result);
+    }
+
+    if (errors.length > 0) {
+        log.className = "error";
+        log.innerHTML = "<strong>Lỗi kiểm thử:</strong><br>• " + errors.join("<br>• ");
+    } else {
+        log.className = "success";
+        log.innerText = `Chúc mừng! SV ${sv} đã vượt qua bài kiểm thử thành công.`;
+    }
+});
 </script>
+</body>
+</html>
