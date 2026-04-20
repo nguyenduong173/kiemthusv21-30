@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+<meta charset="UTF-8">
+
+<title>Form kiểm thử SV21 → SV30</title>
+
+<style>
+
+body{
+font-family: Arial;
+background: #eef2f7;
+display:flex;
+justify-content:center;
+align-items:center;
+height:100vh;
+}
+
+/* khung form */
+
+.container{
+
+width:420px;
+background:white;
+padding:30px;
+border-radius:12px;
+box-shadow:0 4px 12px rgba(0,0,0,0.1);
+
+}
+
+/* tiêu đề */
+
+h2{
+
+text-align:center;
+margin-bottom:20px;
+
+}
+
+/* label */
+
+label{
+
+font-weight:bold;
+display:block;
+margin-top:10px;
+
+}
+
+/* input + select */
+
+input, select{
+
+width:100%;
+padding:10px;
+margin-top:5px;
+border:1px solid #ccc;
+border-radius:6px;
+font-size:15px;
+box-sizing:border-box;
+
+}
+
+/* hiệu ứng focus */
+
+input:focus, select:focus{
+
+border-color:#4CAF50;
+outline:none;
+
+}
+
+/* button */
+
+button{
+
+width:100%;
+margin-top:20px;
+padding:12px;
+background:#4CAF50;
+color:white;
+border:none;
+font-size:16px;
+border-radius:6px;
+cursor:pointer;
+
+}
+
+button:hover{
+
+background:#43a047;
+
+}
+
+/* message */
+
+#message{
+
+margin-top:15px;
+font-weight:bold;
+text-align:center;
+
+}
+
+/* trạng thái */
+
+.error{
+
+color:red;
+
+}
+
+.success{
+
+color:green;
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+
+<div class="container">
+
+<h2>FORM KIỂM THỬ SV21 → SV30</h2>
+
+
+<label>Chọn sinh viên</label>
+
+<select id="student">
+
+<option value="21">SV21</option>
+<option value="22">SV22</option>
+<option value="23">SV23</option>
+<option value="24">SV24</option>
+<option value="25">SV25</option>
+<option value="26">SV26</option>
+<option value="27">SV27</option>
+<option value="28">SV28</option>
+<option value="29">SV29</option>
+<option value="30">SV30</option>
+
+</select>
+
+
+<label>Họ tên</label>
+
+<input id="name" placeholder="Nhập họ tên">
+
+
+<label>Email</label>
+
+<input id="email" placeholder="Nhập email">
+
+
+<label>Số điện thoại</label>
+
+<input id="phone" placeholder="Nhập số điện thoại">
+
+
+<label>Mật khẩu</label>
+
+<input id="password" type="password" placeholder="Nhập mật khẩu">
+
+
+<button onclick="validate()">Kiểm thử</button>
+
+
+<p id="message"></p>
+
+</div>
+
+
+<script>
+
+/* lấy dữ liệu */
+
+function getValue(id){
+
+return document.getElementById(id).value.trim();
+
+}
+
+
+/* đếm số */
+
+function countNumber(password){
+
+let count=0;
+
+for(let i=0;i<password.length;i++){
+
+if(!isNaN(password[i]) && password[i]!=" "){
+
+count++;
+
+}
+
+}
+
+return count;
+
+}
+
+
+/* đếm chữ hoa */
+
+function countUpper(password){
+
+let count=0;
+
+for(let i=0;i<password.length;i++){
+
+if(password[i]>='A' && password[i]<='Z'){
+
+count++;
+
+}
+
+}
+
+return count;
+
+}
+
+
+/* kiểm tra số chẵn */
+
+function evenPhone(phone){
+
+return /^[02468]+$/.test(phone);
+
+}
+
+
+/* validate */
+
+function validate(){
+
+let sv=getValue("student");
+
+let name=getValue("name");
+
+let email=getValue("email");
+
+let phone=getValue("phone");
+
+let password=getValue("password");
+
+
+/* SV21 */
+
+if(sv==="21"){
+
+if(!/^[a-zA-ZÀ-ỹ\s]+$/.test(name)) return show("Tên chứa ký tự đặc biệt");
+
+if(!email.startsWith("user")) return show("Email phải bắt đầu bằng user");
+
+if(!/^\d{11}$/.test(phone)) return show("SĐT phải đủ 11 số");
+
+if(countNumber(password)<3) return show("Password ≥ 3 số");
+
+}
+
+
+/* SV22 */
+
+if(sv==="22"){
+
+if(name.includes(" ")) return show("Tên không chứa dấu cách");
+
+if(/\d/.test(email)) return show("Email không chứa số");
+
+if(!evenPhone(phone)) return show("SĐT chỉ số chẵn");
+
+if(password.length<10) return show("Password ≥10 ký tự");
+
+}
+
+
+/* SV23 */
+
+if(sv==="23"){
+
+if(name.split(" ").length<2) return show("Tên ≥2 từ");
+
+if(!email.startsWith("user")) return show("Email bắt đầu user");
+
+if(!evenPhone(phone)) return show("SĐT chỉ số chẵn");
+
+if(countNumber(password)<3) return show("Password ≥3 số");
+
+}
+
+
+/* SV24 */
+
+if(sv==="24"){
+
+if(!/[A-Z]/.test(name)) return show("Tên có chữ hoa");
+
+if(!email.startsWith("user")) return show("Email bắt đầu user");
+
+if(!phone.startsWith("09")) return show("SĐT bắt đầu 09");
+
+if(password.length<10) return show("Password ≥10 ký tự");
+
+}
+
+
+/* SV25 */
+
+if(sv==="25"){
+
+if(name.length>20) return show("Tên ≤20 ký tự");
+
+if(!email.startsWith("user")) return show("Email bắt đầu user");
+
+if(phone.endsWith("0")) return show("SĐT không kết thúc 0");
+
+if(countUpper(password)<2) return show("Password ≥2 chữ hoa");
+
+}
+
+
+/* SV26 */
+
+if(sv==="26"){
+
+if(name.split(" ").length<2) return show("Tên ≥2 từ");
+
+if(/\d/.test(email)) return show("Email không chứa số");
+
+if(!evenPhone(phone)) return show("SĐT chỉ số chẵn");
+
+if(password.includes("@")) return show("Password không chứa @");
+
+}
+
+
+/* SV27 */
+
+if(sv==="27"){
+
+if(!/[A-Z]/.test(name)) return show("Tên có chữ hoa");
+
+if(!email.startsWith("user")) return show("Email bắt đầu user");
+
+if(!/^\d{11}$/.test(phone)) return show("SĐT đủ 11 số");
+
+if(password.length<10) return show("Password ≥10 ký tự");
+
+}
+
+
+/* SV28 */
+
+if(sv==="28"){
+
+if(name.split(" ").length<2) return show("Tên ≥2 từ");
+
+if(!email.includes("@") || (email.split("@")[0].split(".").length-1)!=2)
+return show("Email có đúng 2 dấu . trước @");
+
+if(phone.endsWith("0")) return show("SĐT không kết thúc 0");
+
+if(countNumber(password)<3) return show("Password ≥3 số");
+
+}
+
+
+/* SV29 */
+
+if(sv==="29"){
+
+if(name.includes(" ")) return show("Tên không chứa dấu cách");
+
+if(/\d/.test(email)) return show("Email không chứa số");
+
+if(phone.endsWith("0")) return show("SĐT không kết thúc 0");
+
+if(countNumber(password)<3) return show("Password ≥3 số");
+
+}
+
+
+/* SV30 */
+
+if(sv==="30"){
+
+if(name.length>20) return show("Tên ≤20 ký tự");
+
+if(/\d/.test(email)) return show("Email không chứa số");
+
+if(!/^\d{11}$/.test(phone)) return show("SĐT đủ 11 số");
+
+if(password.length<10) return show("Password ≥10 ký tự");
+
+}
+
+
+success();
+
+}
+
+
+/* lỗi */
+
+function show(text){
+
+let message=document.getElementById("message");
+
+message.innerHTML=text;
+
+message.className="error";
+
+}
+
+
+/* thành công */
+
+function success(){
+
+let message=document.getElementById("message");
+
+message.innerHTML="Đăng ký hợp lệ";
+
+message.className="success";
+
+}
+
+</script>
+
+</body>
+
+</html>
